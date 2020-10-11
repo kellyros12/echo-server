@@ -31,9 +31,8 @@ def server(log_buffer=sys.stderr):
                 while True:
                     data = conn.recv(16)
                     print('received "{0}"'.format(data.decode('utf8')))
-
-
                     print('sent "{0}"'.format(data.decode('utf8')), file=log_buffer)
+                    conn.sendall(data)
                     if len(data) == 0:
                         break
             except Exception as e:
@@ -48,7 +47,7 @@ def server(log_buffer=sys.stderr):
 
     except KeyboardInterrupt:
         sock.close()
-        print('quitting echo server', file=log_buffer)
+        print('Keyboard Interrupt, quitting echo server', file=log_buffer)
 
 
 if __name__ == '__main__':
